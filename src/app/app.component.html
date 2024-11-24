@@ -1,0 +1,82 @@
+<div class="container mat-elevation-z4">
+
+  <!-- Seção de Eventos -->
+  <div class="events-section">
+    <h2>Eventos Disponíveis</h2>
+    <div class="event-cards-container">
+      <mat-card
+        *ngFor="let event of events"
+        class="event-card"
+        [ngClass]="{ full: event?.vagasDisponiveis === 0 }"
+      >
+        <mat-card-header>
+          <mat-card-title>{{ event.nome }}</mat-card-title>
+          <mat-card-subtitle>{{ event.date | date: 'dd/MM/yyyy' }}</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+          <p>
+            <i *ngIf="event?.vagasDisponiveis === 0" class="fa-solid fa-circle-xmark full-icon"></i>
+            <strong> {{ event?.vagasDisponiveis }}</strong> vagas disponíveis
+          </p>
+        </mat-card-content>
+        <mat-card-actions>
+          <button mat-raised-button color="primary" (click)="reserveSlot(event)">
+            Reservar
+          </button>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+  </div>
+
+  <!-- Painel Principal -->
+  <div class="main-panels">
+
+    <!-- Painel de Status -->
+    <mat-card class="status-panel">
+      <mat-card-header>
+        <mat-icon class="icon">groups</mat-icon>
+        <mat-card-title>
+          <span>{{ totalUsersOnline }} usuários online</span>
+        </mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="status-info">
+          <h3>Status do Sistema</h3>
+          <p>
+            Limite de usuários simultâneos: <strong>{{ maxConcurrentUsers }}</strong>
+          </p>
+          <p>
+            <span class="slots" [ngClass]="{ available: availableSlots > 0, full: availableSlots === 0 }">
+              Slots disponíveis: <strong>{{ availableSlots }}</strong>
+            </span>
+          </p>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- Painel de Fila -->
+    <mat-card class="queue-panel">
+      <mat-card-header>
+        <mat-card-title>Fila de Espera</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+
+
+        <button (click)="start()">Iniciar processo</button>
+
+        <mat-list>
+          <mat-list-item
+            *ngFor="let itens of items; let i = index"
+            [ngClass]="{ active: i < maxConcurrentUsers }"
+          >
+            <ul>
+              <li>{{ itens }}</li>
+            </ul>
+            <i class="fa-solid fa-hourglass-start waiting-icon" *ngIf="i >= maxConcurrentUsers"></i>
+          </mat-list-item>
+        </mat-list>
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+</div>

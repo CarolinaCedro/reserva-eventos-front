@@ -1,0 +1,14 @@
+<mat-card class="reservation-form">
+  <mat-card-title>Confirmação de Reserva</mat-card-title>
+  <form>
+    <mat-form-field>
+      <mat-label>Nome</mat-label>
+      <input matInput [(ngModel)]="reservation.name" name="name" />
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Telefone</mat-label>
+      <input matInput [(ngModel)]="reservation.phone" name="phone" />
+    </mat-form-field>
+    <button mat-raised-button color="primary" (click)="confirmReservation()">Confirmar</button>
+  </form>
+</mat-card>
